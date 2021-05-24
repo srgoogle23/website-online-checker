@@ -9,7 +9,7 @@ $report_subject	= 'Webpage status report';
 $report_email	= '';
 $admin_email	= 'leonardo.oliveira@ecomd.com.br'; // email from which email sent
 
-$required_head_keyword	= '<meta name="mymetaname"'; // Keyword required on the web page. Without ">" at the end. Some webmasters close tags with >, some with />.
+$required_head_keyword	= '<meta name="robots"'; // Keyword required on the web page. Without ">" at the end. Some webmasters close tags with >, some with />.
 $email_errors_only	= true; // TRUE to email report only with errors. When host unreachable, 4xx/5xx HTTP statuses, or required keyword not found. FALSE -- send full report of statuses and redirections.
 
 $connect_timeout	= 5;    // timeout in seconds required server to respond. No response in specified number of seconds = Host unreachable.
@@ -528,10 +528,13 @@ foreach ($urls as $url)
         $is_success = false;
         $status_note = "<div class=\"error\">HTTP error code #$http_error_code</div>";
 
-      }elseif (!$data['req_keyword']) {
+      }
+      /*
+      elseif (!$data['req_keyword']) {
         $is_success = false;
         $status_note = '<div class="warn no-keyword">Required keyword not found!</div>';
       }
+      */
     }else
       $status_note = '<div class="error">'.$data.'</div>';
 
@@ -545,7 +548,7 @@ END;
     if ($is_success = is_array($data)) { // successful HTTP status
       if ($show_title_descr) {
         $line.= <<<END
-  <td class="colm cell-descr">$data[title]<div class="descr">$data[description]</div>$status_note</td>
+  <td class="colm cell-descr" style="background-color: #caffca">$data[title]<div class="descr">$data[description]</div>$status_note</td>
   <td class="cell-charset">$data[charset]</td>
 
 END;
